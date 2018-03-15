@@ -1,10 +1,19 @@
 package playground.erp.melontech.com.architecurepuzzle
 
+import android.app.Application
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import io.reactivex.Observable
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Consumer
+import io.reactivex.internal.operators.observable.ObservableCreate
+import io.reactivex.schedulers.Schedulers
+import java.util.*
+import java.util.concurrent.Callable
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,18 +32,21 @@ class MainActivity : AppCompatActivity() {
         })
 
 
-        var database = AppDatabase.getInstance(this)
+       val db = App.database.UserDao();
 
-        val userrepo = database.UserDao();
+      // val s = db.findByName("Viktor","Manev");
 
-        userrepo.insertAll(User().apply { firstName = "Viktor"; lastName = "Manev" });
+
+
+        //Observable.just(db).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe{ t: UserDao ->  db.insertAll(User().apply { uid =2  ; firstName = "Viktor"; lastName = "Manev" })  }
+
+        Observable.just(db).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe{ t: UserDao -> Log.e("Database Operation", t.findByName("Viktor", "Manev").lastName) }
     }
+
 
 
     override fun onResume() {
         super.onResume()
-
-
     }
 
     companion object Vice {

@@ -10,16 +10,7 @@ import android.content.Context
  */
 
 @Database(entities = arrayOf(User::class), version = 1)
- abstract class  AppDatabase() : RoomDatabase() {
-
-
-     companion object{
-        fun getInstance(context: Context): AppDatabase {
-                    return Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase::class.java, "weather.db")
-                            .build()
-            }
-        }
+    abstract class  AppDatabase() : RoomDatabase() {
 
     abstract fun UserDao(): UserDao
 }

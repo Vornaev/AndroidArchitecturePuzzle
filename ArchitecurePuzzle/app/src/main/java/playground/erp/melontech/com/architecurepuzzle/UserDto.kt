@@ -10,8 +10,6 @@ import android.arch.persistence.room.*
 class User{
     @PrimaryKey
     public var uid: Int = 0
-    get() = this.uid
-    set(value) {   field = value }
 
     @ColumnInfo(name = "first_name")
     public var firstName: String? = null
